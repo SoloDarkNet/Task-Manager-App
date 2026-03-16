@@ -53,6 +53,50 @@ const TaskCard = () => {
     getTask();
   }, []);
 
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case "Low":
+        return "btn btn-warning";
+      case "High":
+        return "btn btn-danger";
+      case "Medium":
+        return "btn btn-success";
+      default:
+        return "btn btn-secondary";
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "In Progress":
+        return "text-warning";
+      case "pending":
+        return "text-danger";
+      case "Pending":
+        return "text-danger";
+      case "Completed":
+        return "text-success";
+      default:
+        return "text-secondary";
+    }
+  };
+
+  const timeAgo = (date) => {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(seconds / 3600);
+    const days = Math.floor(seconds / 86400);
+
+    if (seconds < 60) return "Just now";
+    if (minutes < 60) return minutes + " minutes ago";
+    if (hours < 24) return hours + " hours ago";
+    if (days === 1) return "Yesterday";
+    if (days < 7) return days + " days ago";
+
+    return new Date(date).toLocaleDateString();
+  };
+
   return (
     <div className="container mt-4">
       <div className="row">
@@ -99,7 +143,23 @@ const TaskCard = () => {
                         <p className="card-text text-muted">
                           {card.description}
                         </p>
-
+                        <div className="d-flex flex-row justify-content-between">
+                          <p className={getStatusColor(card.status)}>
+                            <span style={{ color: "#5d5d5d" }}> Status:</span>{" "}
+                            {card.status}
+                          </p>
+                          <div>
+                            <button className={getPriorityColor(card.priority)}>
+                              {card.priority}
+                            </button>
+                          </div>
+                        </div>
+                        <p
+                          className="text-dark"
+                          style={{ fontSize: "12px", fontWeight: "500" }}
+                        >
+                          Created: {timeAgo(card.createdAt)}
+                        </p>
                         <button
                           className="btn btn-outline-primary btn-sm"
                           onClick={() => handleSubmit(card)}
