@@ -12,7 +12,13 @@ nav {
   background-image: linear-gradient(90deg, #0a83df, #0485d4);
 }
 
-#dashboard-container {
+.dashboard-container {
   color: rgb(12, 105, 151);
   background-color: #e7f1ec;
+  height: 100vh;
+}
+
+.bgContainer {
+  min-height: 100vh;
+  background-image: linear-gradient(135deg, #e3f2fd, #bbdefb);
 }
