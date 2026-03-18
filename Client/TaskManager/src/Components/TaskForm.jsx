@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../Services/app";
+import "../App.css";
 
 function TaskForm() {
   const [title, setTitle] = useState("");
@@ -37,10 +38,10 @@ function TaskForm() {
   };
 
   return (
-    <div className="card p-4 shadow mb-4">
+    <div className="card p-4 shadow mb-4 d-flex justify-content-center align-items-center formContainer">
       <h4 className="text-center mb-3">Add Task</h4>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-container">
         {/* Title */}
 
         <input
@@ -63,7 +64,7 @@ function TaskForm() {
         />
 
         {/* Priority */}
-
+        <label className="labelEdit">Priority</label>
         <select
           className="form-select mb-3"
           value={priority}
@@ -75,7 +76,7 @@ function TaskForm() {
         </select>
 
         {/* Status */}
-
+        <label className="labelEdit1">Status</label>
         <select
           className="form-select mb-3"
           value={status}

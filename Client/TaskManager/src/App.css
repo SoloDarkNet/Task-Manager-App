@@ -22,3 +22,27 @@ nav {
   min-height: 100vh;
   background-image: linear-gradient(135deg, #e3f2fd, #bbdefb);
 }
+.labelEdit {
+  margin-left: -215px;
+  margin-bottom: 6px;
+  color: #2673c0;
+  font-weight: 500;
+}
+.labelEdit1 {
+  margin-left: -215px;
+  margin-bottom: 6px;
+  color: #566956;
+  font-weight: 500;
+}
+
+.formContainer {
+  background-image: url("./assets/—Pngtree—task\ management\ business\ planning\ app_15392537.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.form-container {
+  padding: 15px;
+}

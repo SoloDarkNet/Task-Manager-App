@@ -19,7 +19,7 @@ const TaskCard = () => {
     try {
       const res = await api.get("/task/allTask");
       setTask(res.data.getTask);
-      console.log(task);
+      console.log(res.data.getTask);
     } catch (e) {
       console.log(e);
     }
