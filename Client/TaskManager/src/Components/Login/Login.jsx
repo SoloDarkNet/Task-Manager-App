@@ -34,7 +34,7 @@ const Login = () => {
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center login-container">
-      <h2>Login</h2>
+      <h2 style={{color:"white"}}>Login</h2>
       <form className="form-container" onSubmit={handleSubmit}>
         <div className="d-flex flex-column">
           <label>Email:</label>
@@ -64,7 +64,7 @@ const Login = () => {
           <p style={{ color: "red" }}>{error}</p>
           <Link
             to="/register"
-            style={{ color: "#000", textDecoration: "none" }}
+            style={{ color: "#f0eaea", textDecoration: "none" }}
           >
             Don't have an account? Register
           </Link>
