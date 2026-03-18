@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../Services/app";
+import bg from "../assets/—Pngtree—task management business planning app_15392537.png";
 import "../App.css";
 
 function TaskForm() {
