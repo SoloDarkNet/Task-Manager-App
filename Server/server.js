@@ -20,6 +20,8 @@ app.get("/", (req, res) => {
   res.send("Solomon Server Start Ayrichu!!!");
 });
 
-app.listen(5000, () => {
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
   console.log("Solomon Server Start Ayrichu !!!");
 });
