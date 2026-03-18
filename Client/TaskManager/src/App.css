@@ -15,7 +15,8 @@ nav {
 .dashboard-container {
   color: rgb(12, 105, 151);
   background-color: #e7f1ec;
-  height: 100vh;
+  min-height: 100vh;
+  flex-wrap: wrap;
 }
 
 .bgContainer {
