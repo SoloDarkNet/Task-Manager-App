@@ -1,10 +1,10 @@
 input {
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 12px;
-  height: 20%;
-  width: 250px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: white;
+  padding: 10px 14px;
+  width: 100%;
 }
 
 form {
@@ -14,30 +14,35 @@ form {
   justify-content: center;
   height: 400px;
   width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  color: white;
 }
 
 .register-container {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1a1a2e);
+  background-size: 400% 400%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-image: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%);
+  align-items: center;
 }
 .reg-btn {
-  background-image: linear-gradient(90deg, #00d2ff 0%, #558edf);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   border: none;
+  border-radius: 8px;
   color: white;
-  padding: 13px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  padding: 12px;
+  width: 100%;
+  font-weight: bold;
   cursor: pointer;
-  font-family: "Arial", sans-serif;
-  border-radius: 6px;
+  transition: opacity 0.3s;
+  margin-top: 18px;
 }
