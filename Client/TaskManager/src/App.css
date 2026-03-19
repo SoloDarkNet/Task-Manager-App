@@ -137,3 +137,15 @@ nav {
     z-index: 999;
   }
 }
+
+@media screen and (min-width: 768px) {
+  .dashBoardHeading {
+    margin-top: -20px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .taskChartButton {
+    margin-top: 60px !important;
+  }
+}

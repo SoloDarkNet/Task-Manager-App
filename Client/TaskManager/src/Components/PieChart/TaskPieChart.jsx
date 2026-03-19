@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import "../../App.css";
 
 const COLORS = ["#11998e", "#f7971e", "#eb3349"];
 
@@ -59,6 +60,7 @@ const TaskPieChart = ({ task = [], onFilterChange }) => {
           alignItems: "center",
           gap: "6px",
         }}
+        className="taskChartButton"
       >
         📊 {showChart ? "Hide Chart" : "Task Overview"}
       </button>

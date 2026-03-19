@@ -44,7 +44,7 @@ const Navbar = () => {
               <Link
                 className="nav-link"
                 to="/login"
-                style={{ color: "#fffefd" }}
+                style={{ color: "#b23b3b", fontWeight: "500" }}
               >
                 Logout
               </Link>

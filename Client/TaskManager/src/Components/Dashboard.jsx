@@ -8,7 +8,12 @@ const Dashboard = () => {
       <Navbar />
 
       <div className="container mt-4 dashboard-container">
-        <h2 className="text-center mb-4 pt-3 fw-bold">My Tasks Dashboard</h2>
+        <h2
+          className="text-center pt-3 fw-bold dashBoardHeading"
+          style={{ marginTop: "30px" }}
+        >
+          My Tasks Dashboard
+        </h2>
 
         <TaskCard />
       </div>

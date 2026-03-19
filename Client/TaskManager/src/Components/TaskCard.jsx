@@ -69,18 +69,24 @@ const TaskCard = () => {
     }
   };
 
-  const FilterTask = task.filter((t) => {
-    const regex = new RegExp(search, "i");
-    const matchSearch =
-      regex.test(t.title) ||
-      regex.test(t.description) ||
-      regex.test(t.status) ||
-      regex.test(t.priority);
+  const FilterTask = task
+    .filter((t) => {
+      const regex = new RegExp(search, "i");
+      const matchSearch =
+        regex.test(t.title) ||
+        regex.test(t.description) ||
+        regex.test(t.status) ||
+        regex.test(t.priority);
 
-    const matchChart = chartFilter ? t.status === chartFilter : true;
+      const matchChart = chartFilter ? t.status === chartFilter : true;
 
-    return matchSearch && matchChart;
-  });
+      return matchSearch && matchChart;
+    })
+    .sort((a, b) => {
+      if (a.status === "Completed" && b.status !== "Completed") return 1;
+      if (a.status !== "Completed" && b.status === "Completed") return -1;
+      return 0;
+    });
 
   useEffect(() => {
     getTask();
