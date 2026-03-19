@@ -58,7 +58,6 @@ const TaskPieChart = ({ task = [], onFilterChange }) => {
           display: "flex",
           alignItems: "center",
           gap: "6px",
-          margin: "20px 10px",
         }}
       >
         📊 {showChart ? "Hide Chart" : "Task Overview"}
