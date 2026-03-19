@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import api from "../Services/app";
 import SearchFilter from "./FilterTask/filterTask";
 import CountStatusContainer from "./CountStatus/ConutStatusContainer";
+import TaskPieChart from "./PieChart/TaskPieChart";
 
 const TaskCard = () => {
   const [task, setTask] = useState([]);
@@ -12,6 +14,7 @@ const TaskCard = () => {
   const [priority, setPriority] = useState("");
   const [editId, setEditId] = useState(null);
   const [search, setSearch] = useState("");
+  const [chartFilter, setChartFilter] = useState(null);
 
   const navigate = useNavigate();
 
@@ -47,8 +50,10 @@ const TaskCard = () => {
       setEditStatus("");
       setPriority("");
       setEditId(null);
+      toast.success("Task updated successfully! ✅");
     } catch (e) {
       console.log(e);
+      toast.error("Failed to update task! ❌");
     }
   };
 
@@ -57,20 +62,24 @@ const TaskCard = () => {
       await api.delete(`/task/deletedTask/${id}`);
 
       getTask();
+      toast.error("Task deleted! 🗑️");
     } catch (e) {
       console.log(e);
+      toast.error("Failed to delete task! ❌");
     }
   };
 
-  const FilterTask = task.filter((task) => {
+  const FilterTask = task.filter((t) => {
     const regex = new RegExp(search, "i");
+    const matchSearch =
+      regex.test(t.title) ||
+      regex.test(t.description) ||
+      regex.test(t.status) ||
+      regex.test(t.priority);
 
-    return (
-      regex.test(task.title) ||
-      regex.test(task.description) ||
-      regex.test(task.status) ||
-      regex.test(task.priority)
-    );
+    const matchChart = chartFilter ? t.status === chartFilter : true;
+
+    return matchSearch && matchChart;
   });
 
   useEffect(() => {
@@ -128,6 +137,7 @@ const TaskCard = () => {
           <div className="row">
             <SearchFilter search={search} setSearch={setSearch} />
             <CountStatusContainer task={task} />
+            <TaskPieChart task={task} onFilterChange={setChartFilter} />
             {task.length === 0 ? (
               <div className="text-center mt-5 p-5 border rounded bg-light">
                 <h4>No Tasks Yet 🚀</h4>
@@ -137,13 +147,16 @@ const TaskCard = () => {
                   className="btn btn-success"
                   onClick={() => navigate("/taskForm")}
                 >
-                  + Add Task
+                  Add Task
                 </button>
               </div>
             ) : (
               FilterTask.map((card) => (
                 <div className="col-md-4 mb-4" key={card._id}>
-                  <div className="card shadow-lg border-0 h-100">
+                  <div
+                    className="card shadow-lg border-0 h-100"
+                    style={{ backgroundColor: "#ffffff" }}
+                  >
                     <div className="card-body">
                       {editId === card._id ? (
                         <>
@@ -220,7 +233,8 @@ const TaskCard = () => {
                             </p>
                             <div>
                               <button
-                                className={getPriorityColor(card.priority)}
+                                className={`${getPriorityColor(card.priority)} 
+                              ${card.status === "Completed" ? "opacity-50" : ""}`}
                               >
                                 {card.priority}
                               </button>
@@ -235,6 +249,7 @@ const TaskCard = () => {
                           <button
                             className="btn btn-outline-primary btn-sm"
                             onClick={() => handleSubmit(card)}
+                            disabled={card.status === "Completed"}
                           >
                             Edit
                           </button>

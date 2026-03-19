@@ -9,19 +9,20 @@
   }
 }
 nav {
-  background-image: linear-gradient(90deg, #0a83df, #0485d4);
+  background: linear-gradient(90deg, #1a237e, #1565c0, #0288d1) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
 .dashboard-container {
-  color: rgb(12, 105, 151);
-  background-color: #e7f1ec;
+  color: #1a202c;
+  background-color: transparent;
   min-height: 100vh;
   flex-wrap: wrap;
 }
 
 .bgContainer {
   min-height: 100vh;
-  background-image: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  background: linear-gradient(160deg, #f0f4f8 0%, #dce8f0 50%, #e8f0fe 100%);
 }
 .labelEdit {
   margin-left: -215px;
@@ -46,4 +47,93 @@ nav {
 
 .form-container {
   padding: 15px;
+}
+
+.card.shadow-lg.border-0.h-100 {
+  border-radius: 16px !important;
+  border: none !important;
+  background: white !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.card.shadow-lg.border-0.h-100::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.card.shadow-lg.border-0.h-100:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card.shadow-lg.border-0.h-100 .card-body {
+  padding: 20px !important;
+}
+
+/*laptop and  Desktop hover */
+@media (hover: hover) {
+  .card.shadow-lg.border-0.h-100:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+/* Mobile touch effect */
+.card.shadow-lg.border-0.h-100:active {
+  transform: scale(0.97) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+  transition: transform 0.15s ease !important;
+}
+
+.dashboard-container h2 {
+  color: #1a237e !important;
+  letter-spacing: 0.5px;
+}
+
+.pie-chart-container {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pie-chart-title {
+  text-align: center;
+  font-weight: 700;
+  color: #1a237e;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Desktop - top right fixed */
+.pie-chart-wraper-container {
+  position: fixed;
+  top: 80px;
+  right: 16px;
+  z-index: 999;
+}
+
+/* Mobile - bottom fixed */
+@media (min-width: 768px) {
+  .pie-chart-wraper-container {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+  }
 }

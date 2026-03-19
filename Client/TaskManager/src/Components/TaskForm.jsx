@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import api from "../Services/app";
-import bg from "../assets/—Pngtree—task management business planning app_15392537.png";
 import "../App.css";
 
 function TaskForm() {
@@ -31,10 +31,12 @@ function TaskForm() {
       setDescription("");
       setPriority("Medium");
       setStatus("Pending");
+      toast.success("Task Added Successfully! ✅");
 
       navigate("/dashboard");
     } catch (e) {
       console.log(e);
+      toast.error("Failed to Add Task! ❌");
     }
   };
 
