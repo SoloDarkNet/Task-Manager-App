@@ -7,7 +7,18 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      devOptions: {
+        enabled: true,
+      },
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: "CacheFirst",
+          },
+        ],
+      },
       manifest: {
         name: "Task Manager App",
         short_name: "TaskManager",

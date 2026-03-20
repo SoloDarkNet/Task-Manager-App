@@ -1,5 +1,6 @@
 import Navbar from "./Navbar";
 import TaskCard from "./TaskCard";
+import PushNotification from "./PushNotification";
 import "../App.css";
 
 const Dashboard = () => {
@@ -14,7 +15,7 @@ const Dashboard = () => {
         >
           My Tasks Dashboard
         </h2>
-
+        <PushNotification />
         <TaskCard />
       </div>
     </div>
