@@ -1,3 +1,4 @@
+import { useState } from "react";
 import api from "../Services/app";
 import { toast } from "react-toastify";
 
@@ -11,8 +12,11 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 const PushNotification = () => {
+  const [notification, setNotification] = useState(false);
+
   const enableReminder = async () => {
     console.log("Button Clicked");
+    console.log(notification);
 
     try {
       //  Check browser support
@@ -50,8 +54,13 @@ const PushNotification = () => {
 
       //  Send to backend
       await api.post("/notification/subscribe", { subscription });
+      setNotification(!notification);
 
-      toast.success("Reminder enabled! 🔔");
+      {
+        notification
+          ? toast.error("Reminder Disabled! 🔕")
+          : toast.success("Reminder enabled! 🔔");
+      }
     } catch (err) {
       console.log("Error:", err);
       toast.error("Failed to enable reminder!");
@@ -74,7 +83,7 @@ const PushNotification = () => {
         marginBottom: "16px",
       }}
     >
-      🔔 Enable Reminder
+      {notification ? "🔕 Disable Reminder" : "🔔 Enable Reminder"}
     </button>
   );
 };
