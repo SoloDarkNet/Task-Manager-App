@@ -18,6 +18,7 @@ export default defineConfig({
             handler: "CacheFirst",
           },
         ],
+        additionalManifestEntries: [],
       },
       manifest: {
         name: "Task Manager App",
