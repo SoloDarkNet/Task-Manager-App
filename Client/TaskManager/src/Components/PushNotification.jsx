@@ -51,8 +51,8 @@ const PushNotification = () => {
       setNotification(newState);
 
       newState
-        ? toast.error("Reminder Disabled! 🔕")
-        : toast.success("Reminder Enabled! 🔔");
+        ? toast.success("Reminder Enabled! 🔔")
+        : toast.error("Reminder Disabled! 🔕");
     } catch (err) {
       console.log("Error:", err);
       toast.error("Failed to enable reminder!");
