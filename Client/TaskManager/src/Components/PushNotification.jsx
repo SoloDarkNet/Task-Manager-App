@@ -11,8 +11,15 @@ function urlBase64ToUint8Array(base64String) {
 
 const PushNotification = () => {
   const [notification, setNotification] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const enableReminder = async () => {
+  const enableReminder = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (loading) return; // Double trigger Blocked
+    setLoading(true);
+
     console.log("Button Clicked");
 
     try {
@@ -22,7 +29,6 @@ const PushNotification = () => {
       }
 
       const permission = await Notification.requestPermission();
-
       if (permission !== "granted") {
         toast.error("Notification permission denied!");
         return;
@@ -35,53 +41,66 @@ const PushNotification = () => {
 
       const registration = await navigator.serviceWorker.ready;
 
+      const vapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+      if (!vapidKey) {
+        toast.error("VAPID key missing!");
+        return;
+      }
+
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(
-          import.meta.env.VITE_VAPID_PUBLIC_KEY,
-        ),
+        applicationServerKey: urlBase64ToUint8Array(vapidKey),
       });
 
       console.log("Subscription:", subscription);
 
       await api.post("/notification/subscribe", { subscription });
 
-      // Toggle fix
       const newState = !notification;
       setNotification(newState);
 
       newState
-        ? toast.success("Reminder Enabled! 🔔")
-        : toast.error("Reminder Disabled! 🔕");
+        ? toast.error("Reminder Disabled! 🔕")
+        : toast.success("Reminder Enabled! 🔔");
     } catch (err) {
       console.log("Error:", err);
       toast.error("Failed to enable reminder!");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <button
+      onTouchEnd={(e) => {
+        e.preventDefault();
+        enableReminder(e);
+      }}
       onClick={enableReminder}
-      onTouchStart={enableReminder}
       style={{
         background: notification
-          ? "linear-gradient(135deg, #eb3349, #f45c43)" // Disabled — red
-          : "linear-gradient(135deg, #667eea, #764ba2)", // Enabled — purple
+          ? "linear-gradient(135deg, #eb3349, #f45c43)"
+          : "linear-gradient(135deg, #667eea, #764ba2)",
         color: "white",
         border: "none",
         borderRadius: "50px",
         padding: "8px 16px",
         fontSize: "12px",
         fontWeight: "600",
-        cursor: "pointer",
+        cursor: loading ? "not-allowed" : "pointer",
         boxShadow: notification
           ? "0 4px 15px rgba(235,51,73,0.4)"
           : "0 4px 15px rgba(102,126,234,0.4)",
         marginBottom: "16px",
         transition: "all 0.3s ease",
+        opacity: loading ? 0.7 : 1,
       }}
     >
-      {notification ? "🔕 Disable Reminder" : "🔔 Enable Reminder"}
+      {loading
+        ? "Loading..."
+        : notification
+          ? "🔕 Disable Reminder"
+          : "🔔 Enable Reminder"}
     </button>
   );
 };
