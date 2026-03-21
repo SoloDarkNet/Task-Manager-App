@@ -4,17 +4,21 @@ import "./index.css";
 import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// Service Worker register
+// Custom SW register — push event handle
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then((reg) => {
-        console.log("SW registered:", reg);
-      })
-      .catch((err) => {
-        console.log("SW registration failed:", err);
-      });
+  window.addEventListener("load", async () => {
+    try {
+      // vite-plugin-pwa SW unregister
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const reg of registrations) {
+        await reg.unregister();
+      }
+      // Custom SW register
+      const reg = await navigator.serviceWorker.register("/sw.js");
+      console.log("Custom SW registered:", reg);
+    } catch (err) {
+      console.log("SW error:", err);
+    }
   });
 }
 
