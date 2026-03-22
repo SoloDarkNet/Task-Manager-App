@@ -41,7 +41,10 @@ const TaskPieChart = ({ task = [], onFilterChange }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
+        // Mobile-width
+        maxWidth: "200px",
       }}
+      className="pie-chart-wrapper"
     >
       {/* Toggle Button */}
       <button

@@ -15,7 +15,17 @@ const Dashboard = () => {
         >
           My Tasks Dashboard
         </h2>
-        <PushNotification />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "start",
+            marginBottom: "10px",
+            position: "relative",
+            zIndex: 1000,
+          }}
+        >
+          <PushNotification />
+        </div>
         <TaskCard />
       </div>
     </div>

@@ -10,27 +10,27 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 const PushNotification = () => {
-  const [notification, setNotification] = useState(false);
+  const [notification, setNotification] = useState(() => {
+    return localStorage.getItem("reminderEnabled") === "true";
+  });
   const [loading, setLoading] = useState(false);
 
   const enableReminder = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (loading) return; // Double trigger Blocked
+    if (loading) return;
     setLoading(true);
-
-    console.log("Button Clicked");
 
     try {
       if (!("Notification" in window)) {
-        toast.error("Your browser notifications not support!");
+        toast.error("Browser not supported!");
         return;
       }
 
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
-        toast.error("Notification permission denied!");
+        toast.error("Permission denied!");
         return;
       }
 
@@ -43,7 +43,7 @@ const PushNotification = () => {
 
       const vapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
       if (!vapidKey) {
-        toast.error("VAPID key missing!");
+        toast.error("Config error!");
         return;
       }
 
@@ -52,19 +52,18 @@ const PushNotification = () => {
         applicationServerKey: urlBase64ToUint8Array(vapidKey),
       });
 
-      console.log("Subscription:", subscription);
-
       await api.post("/notification/subscribe", { subscription });
 
       const newState = !notification;
       setNotification(newState);
+      localStorage.setItem("reminderEnabled", JSON.stringify(newState));
 
       newState
-        ? toast.error("Reminder Disabled! 🔕")
-        : toast.success("Reminder Enabled! 🔔");
+        ? toast.success("Reminder Enabled! 🔔")
+        : toast.error("Reminder Disabled! 🔕");
     } catch (err) {
       console.log("Error:", err);
-      toast.error("Failed to enable reminder!");
+      toast.error("Failed!");
     } finally {
       setLoading(false);
     }
@@ -72,15 +71,14 @@ const PushNotification = () => {
 
   return (
     <button
-      onTouchEnd={(e) => {
-        e.preventDefault();
-        enableReminder(e);
-      }}
       onClick={enableReminder}
+      disabled={loading}
       style={{
-        background: notification
-          ? "linear-gradient(135deg, #eb3349, #f45c43)"
-          : "linear-gradient(135deg, #667eea, #764ba2)",
+        background: loading
+          ? "linear-gradient(135deg, #999, #777)"
+          : notification
+            ? "linear-gradient(135deg, #eb3349, #f45c43)"
+            : "linear-gradient(135deg, #667eea, #764ba2)",
         color: "white",
         border: "none",
         borderRadius: "50px",
@@ -94,10 +92,12 @@ const PushNotification = () => {
         marginBottom: "16px",
         transition: "all 0.3s ease",
         opacity: loading ? 0.7 : 1,
+        WebkitTapHighlightColor: "transparent",
+        touchAction: "manipulation",
       }}
     >
       {loading
-        ? "Loading..."
+        ? "⏳ Loading..."
         : notification
           ? "🔕 Disable Reminder"
           : "🔔 Enable Reminder"}
