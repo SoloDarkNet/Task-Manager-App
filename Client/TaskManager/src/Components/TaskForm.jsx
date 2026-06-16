@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../Services/app";
 import "../App.css";
@@ -8,6 +9,8 @@ function TaskForm({ onClose }) {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("Medium");
   const [status, setStatus] = useState("Pending");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +32,15 @@ function TaskForm({ onClose }) {
       setPriority("Medium");
       setStatus("Pending");
       toast.success("Task Added Successfully! ✅");
-      onClose();
+
+      if (onClose) {
+        onClose();
+      }
+      navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/dashboard");
+        window.location.reload();
+      }, 350);
     } catch (e) {
       console.log(e);
       toast.error("Failed to Add Task! ❌");
