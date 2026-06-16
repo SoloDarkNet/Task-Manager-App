@@ -8,6 +8,27 @@ webpush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY,
 );
 
+const buildPayload = (title, body) =>
+  JSON.stringify({
+    title,
+    body,
+    icon: "/pwa-192x192.png",
+  });
+
+const sendPushToSubscription = async (subscriptionRecord, payload) => {
+  try {
+    await webpush.sendNotification(subscriptionRecord.subscription, payload);
+    return true;
+  } catch (error) {
+    if (error.statusCode === 404 || error.statusCode === 410) {
+      await Subscription.findByIdAndDelete(subscriptionRecord._id);
+      return false;
+    }
+
+    throw error;
+  }
+};
+
 const saveSubscription = async (req, res) => {
   try {
     const { subscription } = req.body;
@@ -25,32 +46,83 @@ const saveSubscription = async (req, res) => {
   }
 };
 
+const removeSubscription = async (req, res) => {
+  try {
+    await Subscription.findOneAndDelete({ userId: req.user.id });
+    res.status(200).json({ message: "Subscription removed!" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const sendTestNotification = async (req, res) => {
+  try {
+    const subscriptionRecord = await Subscription.findOne({ userId: req.user.id });
+
+    if (!subscriptionRecord) {
+      return res.status(404).json({
+        message: "No active reminder subscription found.",
+      });
+    }
+
+    const delivered = await sendPushToSubscription(
+      subscriptionRecord,
+      buildPayload("Test Reminder", "Push notifications are working."),
+    );
+
+    if (!delivered) {
+      return res.status(410).json({
+        message: "Subscription expired. Please enable reminders again.",
+      });
+    }
+
+    res.status(200).json({ message: "Test notification sent!" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const sendPendingReminder = async () => {
   try {
     const subscriptions = await Subscription.find();
+    let deliveredCount = 0;
 
     for (const sub of subscriptions) {
       const pendingCount = await Task.countDocuments({
-        userId: sub.userId,
+        user: sub.userId,
         status: { $in: ["Pending", "In Progress"] },
       });
 
-      if (pendingCount > 0) {
-        const payload = JSON.stringify({
-          title: "Task Reminder ⏰",
-          body: `You have ${pendingCount} incomplete task${
-            pendingCount > 1 ? "s" : ""
-          }! Keep going! 💪`,
-          icon: "/pwa-192x192.png",
-        });
+      if (pendingCount === 0) {
+        continue;
+      }
 
-        await webpush.sendNotification(sub.subscription, payload);
+      const delivered = await sendPushToSubscription(
+        sub,
+        buildPayload(
+          "Task Reminder",
+          `You have ${pendingCount} incomplete task${
+            pendingCount > 1 ? "s" : ""
+          }! Keep going!`,
+        ),
+      );
+
+      if (delivered) {
+        deliveredCount += 1;
       }
     }
-    console.log("Reminders sent!");
+
+    console.log(
+      `Reminders sent! subscriptions=${subscriptions.length}, delivered=${deliveredCount}`,
+    );
   } catch (err) {
     console.log("Notification error:", err);
   }
 };
 
-module.exports = { saveSubscription, sendPendingReminder };
+module.exports = {
+  saveSubscription,
+  removeSubscription,
+  sendTestNotification,
+  sendPendingReminder,
+};

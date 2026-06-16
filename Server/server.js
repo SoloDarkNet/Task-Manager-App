@@ -20,11 +20,17 @@ app.use("/api/auth", authRoutes);
 app.use("/api/task", taskRoutes);
 app.use("/api/notification", notificationRoutes);
 
-// Every hour 6AM to 9PM reminder
-cron.schedule("0 6-21 * * *", () => {
-  console.log("Running hourly reminder...");
-  sendPendingReminder();
-});
+// Every 5 minutes all day (India time)
+cron.schedule(
+  "0 * * * *",
+  async () => {
+    console.log("Running One hour reminder...", new Date().toISOString());
+    await sendPendingReminder();
+  },
+  {
+    timezone: "Asia/Kolkata",
+  },
+);
 
 app.get("/", (req, res) => {
   res.send("Solomon Server Start Ayrichu!!!");
@@ -34,4 +40,5 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log("Solomon Server Start Ayrichu !!!");
+  console.log("Reminder scheduler active: every 5 minutes (Asia/Kolkata)");
 });

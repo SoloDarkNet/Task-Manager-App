@@ -25,13 +25,13 @@ nav {
   background: linear-gradient(160deg, #f0f4f8 0%, #dce8f0 50%, #e8f0fe 100%);
 }
 .labelEdit {
-  margin-left: -215px;
+  margin-left: 10px;
   margin-bottom: 6px;
   color: #2673c0;
   font-weight: 500;
 }
 .labelEdit1 {
-  margin-left: -215px;
+  margin-left: 10px;
   margin-bottom: 6px;
   color: #566956;
   font-weight: 500;
@@ -167,4 +167,44 @@ nav {
     font-size: 10px !important;
     padding: 10px 15px !important;
   }
+}
+
+/* இதுதான் பேக்கிரவுண்டை Blur செய்யும் Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.close-btn-top {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close-btn-top:hover {
+  color: red;
 }

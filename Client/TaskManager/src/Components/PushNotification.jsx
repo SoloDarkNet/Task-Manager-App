@@ -15,6 +15,25 @@ const PushNotification = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  const getSubscription = async () => {
+    const registration = await navigator.serviceWorker.ready;
+    const existingSubscription = await registration.pushManager.getSubscription();
+
+    if (existingSubscription) {
+      return existingSubscription;
+    }
+
+    const vapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+    if (!vapidKey) {
+      throw new Error("Missing VAPID public key");
+    }
+
+    return registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(vapidKey),
+    });
+  };
+
   const enableReminder = async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -28,42 +47,43 @@ const PushNotification = () => {
         return;
       }
 
+      if (!("serviceWorker" in navigator)) {
+        toast.error("Service Worker not supported!");
+        return;
+      }
+
+      if (notification) {
+        const registration = await navigator.serviceWorker.ready;
+        const existingSubscription = await registration.pushManager.getSubscription();
+
+        if (existingSubscription) {
+          await existingSubscription.unsubscribe();
+        }
+
+        await api.delete("/notification/subscribe");
+        setNotification(false);
+        localStorage.setItem("reminderEnabled", "false");
+        toast.success("Reminder Disabled!");
+        return;
+      }
+
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
         toast.error("Permission denied!");
         return;
       }
 
-      if (!("serviceWorker" in navigator)) {
-        toast.error("Service Worker not supported!");
-        return;
-      }
-
-      const registration = await navigator.serviceWorker.ready;
-
-      const vapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
-      if (!vapidKey) {
-        toast.error("Config error!");
-        return;
-      }
-
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(vapidKey),
-      });
+      const subscription = await getSubscription();
 
       await api.post("/notification/subscribe", { subscription });
+      await api.post("/notification/test");
 
-      const newState = !notification;
-      setNotification(newState);
-      localStorage.setItem("reminderEnabled", JSON.stringify(newState));
-
-      newState
-        ? toast.success("Reminder Enabled! 🔔")
-        : toast.error("Reminder Disabled! 🔕");
+      setNotification(true);
+      localStorage.setItem("reminderEnabled", "true");
+      toast.success("Reminder Enabled! Test notification sent.");
     } catch (err) {
       console.log("Error:", err);
-      toast.error("Failed!");
+      toast.error(err?.response?.data?.message || "Failed!");
     } finally {
       setLoading(false);
     }
@@ -97,10 +117,10 @@ const PushNotification = () => {
       }}
     >
       {loading
-        ? "⏳ Loading..."
+        ? "Loading..."
         : notification
-          ? "🔕 Disable Reminder"
-          : "🔔 Enable Reminder"}
+          ? "Disable Reminder"
+          : "Enable Reminder"}
     </button>
   );
 };
