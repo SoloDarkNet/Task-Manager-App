@@ -1,0 +1,28 @@
+# Dependencies
+Server/node_modules/
+Client/TaskManager/node_modules/
+
+# Environment files
+Server/.env
+Server/.env.*
+!Server/.env.example
+Client/TaskManager/.env
+Client/TaskManager/.env.*
+!Client/TaskManager/.env.example
+
+# Build output
+Client/TaskManager/dist/
+Client/TaskManager/dev-dist/
+Client/TaskManager/dist-ssr/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/

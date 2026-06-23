@@ -1,10 +1,16 @@
+const path = require("path");
 const mongoose = require("mongoose");
-const MogoDB_URL =
-  "mongodb+srv://solomon-55:solomon12345@cluster0.j4shurd.mongodb.net/?appName=Cluster0";
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 const ConnectDB = async () => {
+  const mongoDbUrl = process.env.MONGO_URI;
+
+  if (!mongoDbUrl) {
+    throw new Error("Missing MONGO_URI in Server/.env");
+  }
+
   try {
-    await mongoose.connect(MogoDB_URL);
+    await mongoose.connect(mongoDbUrl);
     console.log("Solomon MongoDb Ithuvum Connect Ayrichu !!!");
   } catch (error) {
     console.log("Error:", error);

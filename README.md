@@ -67,11 +67,16 @@ cd Server
 npm install
 ```
 
-Create `.env` file:
+Copy `Server/.env.example` to `Server/.env` and update the values:
 
 ```
 MONGO_URI=your_mongodb_connection
-JWT_SECRET=your_secret_key
+JWT_SECRET_KEY=your_secret_key
+GEMINI_API_KEY=your_gemini_api_key
+VAPID_EMAIL=mailto:you@example.com
+VAPID_PUBLIC_KEY=your_vapid_public_key
+VAPID_PRIVATE_KEY=your_vapid_private_key
+PORT=5000
 ```
 
 Run backend:
