@@ -5,6 +5,7 @@ import api from "../Services/app";
 import SearchFilter from "./FilterTask/filterTask";
 import CountStatusContainer from "./CountStatus/ConutStatusContainer";
 import TaskPieChart from "./PieChart/TaskPieChart";
+import AISuggestions from "./AISuggestions/ai";
 
 const TaskCard = () => {
   const [task, setTask] = useState([]);
@@ -25,6 +26,17 @@ const TaskCard = () => {
       console.log(res.data.getTask);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const createTask = async (taskData) => {
+    try {
+      await api.post("/task/createTask", taskData);
+      getTask();
+      toast.success("Task Added Successfully! ✅");
+    } catch (e) {
+      console.log(e);
+      toast.error("Failed to Add Task! ❌");
     }
   };
 
@@ -143,6 +155,7 @@ const TaskCard = () => {
           <div className="row">
             <SearchFilter search={search} setSearch={setSearch} />
             <CountStatusContainer task={task} />
+            <AISuggestions addTask={createTask} />
             <TaskPieChart task={task} onFilterChange={setChartFilter} />
             {task.length === 0 ? (
               <div className="text-center mt-5 p-5 border rounded bg-light">

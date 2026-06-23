@@ -1,0 +1,214 @@
+.heading {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+}
+span {
+  border: 1px solid #e6dddd;
+  margin-left: 8px;
+}
+
+.hide-modern {
+  background-color: rgba(255, 255, 255, 0.15); /* Light transparent white */
+  color: #ffffff; /* White text */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(4px); /* Glass effect */
+  transition: all 0.2s ease;
+}
+
+.hide-modern:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: #ffffff;
+}
+
+/* Container to align buttons nicely */
+.categories-container {
+  display: flex;
+  flex-wrap: wrap; /* Screen chinnadhaana adutha line-ku auto-ah poirum */
+  gap: 10px;
+  padding: 10px 0;
+}
+
+@media screen and (min-width: 768px) {
+  .categories-container {
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+
+/* Stylish Category Button */
+.category-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* Icon-kum text-kum naduvula space */
+  padding: 8px 16px;
+  background-color: #ffffff;
+  color: #495057;
+  border: 1px solid #e9ecef;
+  border-radius: 25px; /* Pill shape */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease; /* Smooth animation */
+}
+
+/* Hover aagumbothu varum effect */
+.category-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #0d6efd; /* Blue border on hover */
+  color: #0d6efd; /* Blue text */
+  transform: translateY(-2px); /* Light-ah mela move aagum */
+  box-shadow: 0 4px 8px rgba(13, 110, 253, 0.15); /* Blue tinted shadow */
+}
+/* Removes default bullet points from <ul> */
+.ai-card-content {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* Limits height */
+  overflow-y: auto; /* Adds scroll if there are many suggestions */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.ai-card-content::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .ai-card-content {
+    margin-top: 20px;
+    margin-bottom: 35px;
+  }
+}
+
+/* Individual Suggestion Item */
+/* Individual Suggestion Card */
+.suggestion-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 18px; /* Card-ku ulla nalla space kudukkum */
+  margin-bottom: 12px;
+
+  /* Glassmorphism Card Style */
+  background: rgba(255, 255, 255, 0.06); /* Light transparent background */
+  backdrop-filter: blur(5px); /* Soft blur effect */
+  border-radius: 12px; /* Smooth rounded corners */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle glowing border */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft drop shadow */
+
+  /* Smooth Animation */
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect (Mouse mela vekkum pothu lift aagum) */
+.suggestion-item:hover {
+  background: rgba(75, 79, 205, 0.1); /* Slightly brighter on hover */
+  transform: translateY(-3px); /* Card konjam mela thookum */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Stronger shadow on lift */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Border konjam highlight aagum */
+}
+
+/* Flex item inside the card to group priority and buttons nicely */
+.suggestion-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between priority badge and buttons */
+}
+
+/* Removes border for the last item */
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-title {
+  font-size: 14px;
+  color: #14375a;
+  font-weight: 500;
+  border: none;
+}
+
+/* Priority Badge Base Style */
+.suggestion-priority {
+  font-size: 9px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-right: 40px;
+}
+
+@media screen and (min-width: 768px) {
+  .suggestion-priority {
+    margin-left: 100px;
+  }
+}
+
+/* Dynamic Priority Colors (Make sure your API returns High, Medium, or Low) */
+.priority-high {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+.priority-medium {
+  background-color: #ffc107; /* Yellow */
+  color: black;
+}
+
+.priority-low {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+/* Container to keep buttons side-by-side with a small gap */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Common Base Style for both buttons */
+.icon-btn {
+  background: rgba(255, 255, 255, 0.1); /* Subtle semi-transparent background */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border */
+  border-radius: 50%; /* Makes the button perfectly round */
+  width: 32px; /* Fixed width */
+  height: 32px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease; /* Smooth animation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ➕ Add Button Hover Effect (Green Vibe) */
+.add-btn:hover {
+  background-color: #28a745; /* Green background on hover */
+  border-color: #28a745;
+  transform: translateY(-3px); /* Lifts the button slightly up */
+  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4); /* Green glow effect */
+}
+
+/* ❌ Remove Button Hover Effect (Red Vibe) */
+.remove-btn:hover {
+  background-color: #dc3545; /* Red background on hover */
+  border-color: #dc3545;
+  transform: translateY(-3px); /* Lifts the button slightly up */
+  box-shadow: 0 6px 12px rgba(203, 149, 155, 0.4); /* Red glow effect */
+}
+
+/* Click Animation (Pushes the button down when clicked) */
+.icon-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
