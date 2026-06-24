@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../../Services/app";
 import "./ai.css";
 
 const Categories = [
@@ -19,10 +19,7 @@ const AISuggestions = ({ addTask }) => {
 
   // API Call (For future use)
   const getSuggestions = async (category) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/ai/suggestions",
-      { category },
-    );
+    const response = await api.post("/ai/suggestions", { category });
     return response.data;
   };
 
