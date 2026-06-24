@@ -16,9 +16,17 @@ import DelayedFallback from "../DelayedFallback";
 const TaskForm = lazy(() => import("./Components/TaskForm"));
 
 const App = () => {
+  const Loader = () => (
+    <div className="d-flex justify-content-center align-items-center py-4 flex-column">
+      <div className="spinner-border text-primary mb-2" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  );
+
   return (
     <BrowserRouter>
-      <Suspense fallback={<DelayedFallback />}>
+      <Suspense fallback={Loader()}>
         <Routes>
           <Route
             path="/"
