@@ -2,11 +2,19 @@ const webpush = require("web-push");
 const Subscription = require("../Models/Subscription");
 const Task = require("../Models/Task");
 
-webpush.setVapidDetails(
-  process.env.VAPID_EMAIL,
-  process.env.VAPID_PUBLIC_KEY,
-  process.env.VAPID_PRIVATE_KEY,
-);
+// Validate VAPID environment variables before setting details to avoid crashing
+const vapidSubject = process.env.VAPID_EMAIL; // e.g. "mailto:you@example.com" or a URL
+const vapidPublic = process.env.VAPID_PUBLIC_KEY;
+const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
+
+if (!vapidSubject || !vapidPublic || !vapidPrivate) {
+  console.warn(
+    "VAPID configuration missing: set VAPID_EMAIL, VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY environment variables to enable push notifications.",
+  );
+  // Do NOT call webpush.setVapidDetails so the server doesn't crash during module load.
+} else {
+  webpush.setVapidDetails(vapidSubject, vapidPublic, vapidPrivate);
+}
 
 const buildPayload = (title, body) =>
   JSON.stringify({
