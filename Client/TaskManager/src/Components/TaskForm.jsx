@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../Services/app";
@@ -11,6 +11,14 @@ function TaskForm({ onClose }) {
   const [status, setStatus] = useState("Pending");
 
   const navigate = useNavigate();
+
+  const onRemove = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      navigate("/dashboard");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,10 +40,6 @@ function TaskForm({ onClose }) {
       setPriority("Medium");
       setStatus("Pending");
       toast.success("Task Added Successfully! ✅");
-
-      if (onClose) {
-        onClose();
-      }
       navigate("/dashboard");
       setTimeout(() => {
         navigate("/dashboard");
@@ -50,7 +54,7 @@ function TaskForm({ onClose }) {
   return (
     <div className="modal-overlay">
       <div className="card p-4 shadow mb-4 d-flex justify-content-center align-items-center formContainer modal-box">
-        <button className="close-btn-top" onClick={onClose}>
+        <button className="close-btn-top" onClick={onRemove}>
           &times;
         </button>
         <h4 className="text-center mb-3">Add Task</h4>

@@ -1,13 +1,21 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import TaskCard from "./TaskCard";
 import PushNotification from "./PushNotification";
 import TaskPieChart from "./PieChart/TaskPieChart";
-import { useState } from "react";
+import TaskForm from "./TaskForm";
 import "../App.css";
 
 const Dashboard = () => {
   const [task, setTask] = useState([]);
   const [chartFilter, setChartFilter] = useState(null);
+  const navigate = useNavigate();
+
+  const onAddTask = () => {
+    navigate("/taskForm");
+    console.log("CLick Add Task");
+  };
 
   return (
     <div className="bgContainer">
@@ -28,10 +36,15 @@ const Dashboard = () => {
             alignItems: "center",
             gap: "12px",
             marginBottom: "16px",
+            marginTop: "16px",
             flexWrap: "wrap",
           }}
+          className="btn-container"
         >
           <PushNotification />
+          <button onClick={() => onAddTask()} className="gradient-btn">
+            Add Task
+          </button>
           <TaskPieChart task={task} onFilterChange={setChartFilter} />
         </div>
 

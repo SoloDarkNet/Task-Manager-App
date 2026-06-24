@@ -17,7 +17,8 @@ const PushNotification = () => {
 
   const getSubscription = async () => {
     const registration = await navigator.serviceWorker.ready;
-    const existingSubscription = await registration.pushManager.getSubscription();
+    const existingSubscription =
+      await registration.pushManager.getSubscription();
 
     if (existingSubscription) {
       return existingSubscription;
@@ -54,7 +55,8 @@ const PushNotification = () => {
 
       if (notification) {
         const registration = await navigator.serviceWorker.ready;
-        const existingSubscription = await registration.pushManager.getSubscription();
+        const existingSubscription =
+          await registration.pushManager.getSubscription();
 
         if (existingSubscription) {
           await existingSubscription.unsubscribe();
@@ -109,7 +111,7 @@ const PushNotification = () => {
         boxShadow: notification
           ? "0 4px 15px rgba(235,51,73,0.4)"
           : "0 4px 15px rgba(102,126,234,0.4)",
-        marginBottom: "16px",
+
         transition: "all 0.3s ease",
         opacity: loading ? 0.7 : 1,
         WebkitTapHighlightColor: "transparent",
