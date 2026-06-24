@@ -29,25 +29,14 @@ const Dashboard = () => {
         </h2>
 
         {/* Top row — 2 buttons */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            gap: "12px",
-            marginBottom: "16px",
-            marginTop: "16px",
-            flexWrap: "wrap",
-          }}
-          className="btn-container"
-        >
+        <div className="action1-buttons">
           <PushNotification />
           <button onClick={() => onAddTask()} className="gradient-btn">
             Add Task
           </button>
+
           <TaskPieChart task={task} onFilterChange={setChartFilter} />
         </div>
-
         <TaskCard task={task} setTask={setTask} chartFilter={chartFilter} />
       </div>
     </div>

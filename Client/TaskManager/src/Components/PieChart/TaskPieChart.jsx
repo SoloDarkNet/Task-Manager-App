@@ -35,7 +35,7 @@ const TaskPieChart = ({ task = [], onFilterChange }) => {
     <div
       style={{
         position: "fixed",
-        top: "80px",
+        top: "230px",
         right: "16px",
         zIndex: 999,
         display: "flex",
@@ -49,20 +49,6 @@ const TaskPieChart = ({ task = [], onFilterChange }) => {
       {/* Toggle Button */}
       <button
         onClick={() => setShowChart(!showChart)}
-        style={{
-          background: "linear-gradient(135deg, #667eea, #764ba2)",
-          color: "white",
-          border: "none",
-          borderRadius: "50px",
-          padding: "8px 16px",
-          fontSize: "12px",
-          fontWeight: "600",
-          cursor: "pointer",
-          boxShadow: "0 4px 15px rgba(102,126,234,0.4)",
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-        }}
         className="taskChartButton"
       >
         📊 {showChart ? "Hide Chart" : "Task Overview"}
@@ -72,7 +58,7 @@ const TaskPieChart = ({ task = [], onFilterChange }) => {
       {showChart && (
         <div
           style={{
-            marginTop: "8px",
+            marginTop: "18px",
             width: "240px",
             background: "linear-gradient(135deg, #ffffff, #f0f4ff)",
             borderRadius: "16px",
