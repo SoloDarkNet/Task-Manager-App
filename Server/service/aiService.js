@@ -13,11 +13,12 @@ const delay = (ms) => {
 const generateSuggestion = async (category) => {
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-  const prompt = `Act as a productivity assistant. Give me 3 highly unique and creative task suggestions for the category: "${category}". 
-    Make sure they are different from generic tasks. (Randomizer: ${Math.random()})
-    Return the output ONLY as a valid JSON array of objects. 
-    Each object must have exactly two keys: "title" (a string describing the task) and "priority" (must be "High", "Medium", or "Low").
-    Do not include markdown tags like \`\`\`json.`;
+  const prompt = `Act as a productivity assistant. Give me 3 very short, minimal task titles for the category: "${category}".
+    Keep titles concise, no more than 3-9 words, and avoid long descriptions.
+    Make sure they are unique and not generic. (Randomizer: ${Math.random()})
+    Return the output ONLY as a valid JSON array of objects.
+    Each object must have exactly two keys: "title" (short task title) and "priority" (must be "High", "Medium", or "Low").
+    Do not include markdown tags like \`\`\`json\`.`;
 
   //Retry Count
   let retries = 3;
