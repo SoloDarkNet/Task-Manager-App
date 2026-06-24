@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 
 const ConnectDB = async () => {
-  const mongoDbUrl = process.env.MONGO_URI;
+  const mongoDbUrl = process.env.MONGODB_URL;
 
   if (!mongoDbUrl) {
-    throw new Error("Missing MONGO_URI in Server/.env");
+    throw new Error(
+      "Missing MongoDB connection string. Add MONGO_URI=... to Server/.env",
+    );
   }
 
   try {
