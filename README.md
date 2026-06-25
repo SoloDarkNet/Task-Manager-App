@@ -7,13 +7,14 @@ This app helps users manage their daily tasks with features like authentication,
 
 ## 🚀 Live Demo
 
-*  https://task-manager-applications.onrender.com
+* https://task-manager-app-gold-nine.vercel.app/
 ---
 
 ## 📌 Features
 
 * 🔐 User Authentication (Register & Login)
 * ➕ Create, Update, Delete Tasks
+* Implement AI Task Suggestion features
 * 📊 Task Status Management (Pending, Completed)
 * 🎯 Priority-based Filtering
 * 🔍 Search Tasks
@@ -110,6 +111,10 @@ npm run dev
 * POST `/api/task/createTask`
 * PUT `/api/task/:id`
 * DELETE `/api/task/:id`
+
+### AI Routes
+
+  * Post `/api/ai/suggestions`
 
 ---
 
