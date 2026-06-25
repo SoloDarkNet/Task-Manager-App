@@ -1,6 +1,6 @@
 # 📝 Task Manager App
 
-A full-stack **Task Management Web Application** built using **React (Vite)**, **Node.js**, **Express**, and **MongoDB**.
+A AI Task Suggest full-stack **Task Management Web Application** built using **React (Vite)**, **Node.js**, **Express**, and **MongoDB**.
 This app helps users manage their daily tasks with features like authentication, task creation, filtering, and status tracking.
 
 ---
